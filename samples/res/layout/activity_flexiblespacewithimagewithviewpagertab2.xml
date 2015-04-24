@@ -88,6 +88,7 @@
             android:id="@+id/sliding_tabs"
             android:layout_width="match_parent"
             android:layout_height="@dimen/tab_height"
+            android:layout_marginLeft=""
             android:background="@android:color/transparent" />
     </FrameLayout>
 

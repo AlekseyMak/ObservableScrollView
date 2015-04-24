@@ -57,12 +57,14 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ListView listView = (ListView) findViewById(android.R.id.list);
-        listView.setAdapter(new SimpleAdapter(this, getData(),
-                R.layout.list_item_main,
-                new String[]{TAG_CLASS_NAME, TAG_DESCRIPTION,},
-                new int[]{R.id.className, R.id.description,}));
-        listView.setOnItemClickListener(this);
+        startActivity(new Intent(this, FlexibleSpaceWithImageWithViewPagerTab2Activity.class));
+
+//        ListView listView = (ListView) findViewById(android.R.id.list);
+//        listView.setAdapter(new SimpleAdapter(this, getData(),
+//                R.layout.list_item_main,
+//                new String[]{TAG_CLASS_NAME, TAG_DESCRIPTION,},
+//                new int[]{R.id.className, R.id.description,}));
+//        listView.setOnItemClickListener(this);
     }
 
     @Override

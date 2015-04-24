@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,6 +54,11 @@ public abstract class SlidingUpBaseActivity<S extends Scrollable> extends BaseAc
     private Toolbar mToolbar;
     private S mScrollable;
     private TouchInterceptionFrameLayout mInterceptionLayout;
+
+    private Button mBtnBook;
+    private Button mBtnMore;
+    private View mPanelWithButtons;
+    private View mScroll;
 
     // Fields that just keep constants like resource values
     private int mActionBarSize;
@@ -123,6 +129,37 @@ public abstract class SlidingUpBaseActivity<S extends Scrollable> extends BaseAc
                 slideOnClick();
             }
         });
+
+        mImageView.setVisibility(mImageView.INVISIBLE);
+
+
+        findViewById(R.id.clickable_view).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(SlidingUpBaseActivity.this, "sdfsdfsdf", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        mBtnBook = (Button) findViewById(R.id.btnBook);
+        mBtnBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(SlidingUpBaseActivity.this, "Booked!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        mBtnMore = (Button) findViewById(R.id.btnMore);
+        mBtnMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(SlidingUpBaseActivity.this, "More!!!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        mPanelWithButtons = findViewById(R.id.panelControlButtons);
+        mScroll = findViewById(R.id.scroll);
+
         mScrollable = createScrollable();
 
         mFab = findViewById(R.id.fab);
@@ -184,6 +221,7 @@ public abstract class SlidingUpBaseActivity<S extends Scrollable> extends BaseAc
     }
 
     private TouchInterceptionFrameLayout.TouchInterceptionListener mInterceptionListener = new TouchInterceptionFrameLayout.TouchInterceptionListener() {
+        private final float MOVE_GAP = 5.0f;
         @Override
         public boolean shouldInterceptTouchEvent(MotionEvent ev, boolean moving, float diffX, float diffY) {
             final int minInterceptionLayoutY = -mIntersectionHeight;
@@ -195,8 +233,9 @@ public abstract class SlidingUpBaseActivity<S extends Scrollable> extends BaseAc
             if (fabRect.contains((int) ev.getX(), (int) ev.getY())) {
                 return false;
             } else {
-                return minInterceptionLayoutY < (int) ViewHelper.getY(mInterceptionLayout)
-                        || (moving && mScrollable.getCurrentScrollY() - diffY < 0);
+                return (minInterceptionLayoutY < (int) ViewHelper.getY(mInterceptionLayout)
+                        || (moving && mScrollable.getCurrentScrollY() - diffY < 0)
+                );//&& (diffY > MOVE_GAP);
             }
         }
 
@@ -242,12 +281,17 @@ public abstract class SlidingUpBaseActivity<S extends Scrollable> extends BaseAc
         float translationY = 0;
         switch (slidingState) {
             case SLIDING_STATE_TOP:
+//                mPanelWithButtons.setVisibility(View.GONE);
                 translationY = 0;
                 break;
             case SLIDING_STATE_MIDDLE:
+                mPanelWithButtons.setVisibility(View.GONE);
+                mScroll.setVisibility(View.VISIBLE);
                 translationY = getAnchorYImage();
                 break;
             case SLIDING_STATE_BOTTOM:
+                mPanelWithButtons.setVisibility(View.VISIBLE);
+                mScroll.setVisibility(View.GONE);
                 translationY = getAnchorYBottom();
                 break;
         }
@@ -479,10 +523,11 @@ public abstract class SlidingUpBaseActivity<S extends Scrollable> extends BaseAc
     }
 
     private float getAnchorYBottom() {
-        return getScreenHeight() - mHeaderBarHeight;
+        return getScreenHeight() * 0.8f - mHeaderBarHeight;
     }
 
     private float getAnchorYImage() {
-        return mImageView.getHeight();
+//        return mImageView.getHeight();
+        return getScreenHeight() * 0.3f;
     }
 }

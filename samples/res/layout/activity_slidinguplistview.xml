@@ -35,6 +35,7 @@
 
         <View
             android:layout_width="match_parent"
+            android:id="@+id/clickable_view"
             android:layout_height="?attr/actionBarSize"
             android:background="#3F51B5" />
 
@@ -82,7 +83,7 @@
         android:clipChildren="false"
         android:layout_height="match_parent">
 
-        <com.github.ksoichiro.android.observablescrollview.ObservableListView
+       <com.github.ksoichiro.android.observablescrollview.ObservableListView
             android:id="@+id/scroll"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -120,6 +121,28 @@
                     android:paddingLeft="@dimen/margin_standard"
                     android:textColor="@android:color/white"
                     android:textSize="20sp" />
+
+                <LinearLayout
+                    android:id="@+id/panelControlButtons"
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:visibility="visible"
+                    android:layout_height="60dp">
+
+
+                    <Button
+                        android:id="@+id/btnBook"
+                        android:text="Book!"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <Button
+                        android:id="@+id/btnMore"
+                        android:text="More"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
